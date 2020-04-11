@@ -1,0 +1,5 @@
+*.un~
+*.retry
+.env
+.DS_STORE
+*ssh.key

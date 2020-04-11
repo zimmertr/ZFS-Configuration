@@ -1,0 +1,43 @@
+---
+#vars file for create_homelab_zvols
+
+#List of ZFS Volumes
+volumes:
+  saturnpool: #List of SaturnPool ZVOLs. No sublists are necessary since no Quotas or Reservations are configured.
+    - SaturnPool/Backups
+    - SaturnPool/Documents
+    - SaturnPool/downloads
+    - SaturnPool/Games
+    - SaturnPool/Miscellaneous
+    - SaturnPool/Media
+    - SaturnPool/Media/Audiobooks
+    - SaturnPool/Media/Anime
+    - SaturnPool/Media/Ebooks
+    - SaturnPool/Media/Cartoons
+    - SaturnPool/Media/Movies
+    - SaturnPool/Media/Music
+    - SaturnPool/Media/TV_Shows
+    - SaturnPool/Media/Videos
+    - SaturnPool/Pictures
+    - SaturnPool/Software
+  flashpool: #List of FlashPool ZVOLs. All except Plex have the same Quotas & Reservations.
+    plex: #Plex gets its own list since it has atypical requirements.
+      - FlashPool/Kubernetes
+      - FlashPool/Kubernetes/Plex
+    standard:
+      - FlashPool/Kubernetes/Deluge/config
+      - FlashPool/Kubernetes/Personal-Website
+      - FlashPool/Kubernetes/Radarr
+      - FlashPool/Kubernetes/Sonarr
+      - FlashPool/Kubernetes/Tautulli
+      - FlashPool/Kubernetes/Confluence
+      - FlashPool/Kubernetes/Jira
+      - FlashPool/Kubernetes/Nextcloud
+    subvolumes: #Subvolumes inherit properties from their parents. Separate list necessary to avoid duplication them.
+      - FlashPool/Kubernetes/Confluence/config
+      - FlashPool/Kubernetes/Confluence/postgres
+      - FlashPool/Kubernetes/Jira/config
+      - FlashPool/Kubernetes/Jira/postgres
+      - FlashPool/Kubernetes/Nextcloud/config
+      - FlashPool/Kubernetes/Nextcloud/postgres
+      - FlashPool/Kubernetes/Nextcloud/userdata

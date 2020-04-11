@@ -1,0 +1,53 @@
+- name: "Deploying SaturnPool datasets."
+  zfs:
+    name: "{{ zvol }}"
+    state: present
+    extra_zfs_properties:
+      atime: off
+      snapdir: hidden
+      compression: lz4
+      mountpoint: /temp/{{ zvol }}
+  loop: "{{ volumes.saturnpool }}"
+  loop_control:
+    loop_var: zvol
+
+- name: "Deploying FlashPool datasets for applications with standard requirements."
+  zfs:
+    name: "{{ zvol }}"
+    state: present
+    extra_zfs_properties:
+      atime: off
+      snapdir: hidden
+      compression: lz4
+      quota: 10G
+      reservation: 1G
+      mountpoint: /temp/{{ zvol }}
+  loop: "{{ volumes.flashpool.standard }}"
+  loop_control:
+    loop_var: zvol
+
+- name: "Deploying FlashPool datasets for applications with higher requirements."
+  zfs:
+    name: "{{ zvol }}"
+    state: present
+    extra_zfs_properties:
+      atime: off
+      snapdir: hidden
+      compression: lz4
+      quota: 100G
+      reservation: 10G
+      mountpoint: /temp/{{ zvol }}
+  loop: "{{ volumes.flashpool.plex }}"
+  loop_control:
+    loop_var: zvol
+
+- name: "Deploying FlashPool volumes for existing datasets."
+  zfs:
+    name: "{{ zvol }}"
+    state: present
+    extra_zfs_properties:
+      mountpoint: /temp/{{ zvol }}
+  loop: "{{ volumes.flashpool.subvolumes }}"
+  loop_control:
+    loop_var: zvol
+

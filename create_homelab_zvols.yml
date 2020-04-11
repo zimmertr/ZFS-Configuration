@@ -1,0 +1,6 @@
+---
+- hosts: server
+  gather_facts: false
+  tasks:
+    - include_role:
+        name: create_homelab_zvols
